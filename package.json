@@ -1,0 +1,10 @@
+{
+  "name": "parcel-resolver-ts-paths",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Alexey Yakovlev <alexeyyakovlev0359@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@parcel/plugin": "^2.0.1"
+  }
+}
