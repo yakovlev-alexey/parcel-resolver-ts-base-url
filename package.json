@@ -32,7 +32,6 @@
     "engines": {
         "node": ">=12"
     },
-    "type": "module",
     "dependencies": {
         "@parcel/plugin": "^2.0.0"
     },
