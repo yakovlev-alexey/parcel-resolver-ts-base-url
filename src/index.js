@@ -2,12 +2,12 @@ import path from "path";
 
 import { Resolver } from "@parcel/plugin";
 
-import { createMemoizeTsConfig } from "./memo";
+import { getTsConfig } from "./utils/get-ts-config";
 
-import { matchPath } from "./match-path";
-import { parsePaths } from "./parse-paths";
-import { resolveBase } from "./resolve-base";
-import { resolvePath } from "./resolve-path";
+import { matchPath } from "./steps/match-path";
+import { parsePaths } from "./steps/parse-paths";
+import { resolveBase } from "./steps/resolve-base";
+import { resolvePath } from "./steps/resolve-path";
 
 const memoizeTsConfig = createMemoizeTsConfig();
 
@@ -20,7 +20,7 @@ export default new Resolver({
         }
 
         try {
-            const tsConfig = await memoizeTsConfig(
+            const tsConfig = await getTsConfig(
                 options.projectRoot,
                 options.inputFS
             );

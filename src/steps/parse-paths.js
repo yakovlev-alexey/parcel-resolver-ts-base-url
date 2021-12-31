@@ -1,6 +1,6 @@
 /**
- * @typedef {{match: string, resolve: string[], regexp: RegExp}} Path
- * @param {Record<string, string[]>} paths
+ * @typedef {{match: string, resolve: string[] | string, regexp: RegExp}} Path
+ * @param {Record<string, string[] | string>} paths
  * @returns {Path[]}
  */
 const parsePaths = (paths) => {

@@ -1,5 +1,7 @@
 import path from "path";
 
+import { matchFile } from "../utils/match-file";
+
 /**
  * @param {string} specifier
  * @param {string} baseUrl
@@ -9,11 +11,7 @@ import path from "path";
 const resolveBase = async (specifier, baseUrl, fs) => {
     const filePath = path.resolve(baseUrl, specifier);
 
-    if (await fs.exists(filePath)) {
-        return filePath;
-    }
-
-    return null;
+    return await matchFile(filePath, fs);
 };
 
 export { resolveBase };

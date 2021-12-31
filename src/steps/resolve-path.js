@@ -1,5 +1,7 @@
 import path from "path";
 
+import { matchFile } from "../utils/match-file";
+
 /**
  * @param {string} specifier
  * @param {import('./parse-paths').Path} matchedPath
@@ -12,11 +14,18 @@ const resolvePath = async (specifier, matchedPath, baseUrl, fs) => {
 
     const wildcard = specifier.replace(strippedMatch, "");
 
-    for (const resolve of matchedPath.resolve) {
+    const resolves =
+        typeof matchedPath.resolve === "string"
+            ? [matchedPath.resolve]
+            : matchedPath.resolve;
+
+    for (const resolve of resolves) {
         const filePath = path.resolve(baseUrl, resolve.replace("*", wildcard));
 
-        if (await fs.exists(filePath)) {
-            return filePath;
+        const matchedFile = await matchFile(filePath, fs);
+
+        if (matchedFile) {
+            return matchedFile;
         }
     }
 
