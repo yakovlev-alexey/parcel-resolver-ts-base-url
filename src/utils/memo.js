@@ -4,11 +4,15 @@
  */
 
 /**
- * @template T, A
- * @param {(memo: Memo<T>, ...args: A) => T} func
- * @returns {(...args:A) => T}
+ * @template {Array<unknown>} A
+ * @template T, R
+ * @param {(memo: Memo<T>, ...args: A) => R} func
+ * @returns {(...args:A) => R}
  */
 const createMemo = (func) => {
+    /**
+     * @type {Memo<T>}
+     */
     const memo = {};
 
     return (...args) => {

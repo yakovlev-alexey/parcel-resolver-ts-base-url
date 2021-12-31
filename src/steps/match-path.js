@@ -1,7 +1,7 @@
 /**
  * @param {string} specifier
  * @param {import("./parse-paths").Path[]} paths
- * @returns {Path | null}
+ * @returns {import("./parse-paths").Path | null}
  */
 const matchPath = (specifier, paths) => {
     for (const path of paths) {

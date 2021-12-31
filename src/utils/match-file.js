@@ -13,13 +13,13 @@ const matchFile = async (matchedPath, fs, extensions = POSSIBLE_EXTENSIONS) => {
     const exists = await fs.exists(matchedPath);
 
     const stat = exists && (await fs.stat(matchedPath));
-    const isDirectory = exists && stat.isDirectory();
+    const isDirectory = stat && stat.isDirectory();
 
     if (isDirectory) {
         const pkg = await getPackage(matchedPath, fs);
 
         const main = pkg && (pkg.main || pkg.module);
-        if (main) {
+        if (typeof main === "string") {
             return path.resolve(matchedPath, main);
         }
     }

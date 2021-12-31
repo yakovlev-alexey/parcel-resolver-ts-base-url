@@ -7,7 +7,7 @@ import { matchFile } from "../utils/match-file";
  * @param {import('./parse-paths').Path} matchedPath
  * @param {string} baseUrl
  * @param {import('@parcel/fs').FileSystem} fs
- * @returns {string | null}
+ * @returns {Promise<string | null>}
  */
 const resolvePath = async (specifier, matchedPath, baseUrl, fs) => {
     const strippedMatch = matchedPath.match.replace("*", "");

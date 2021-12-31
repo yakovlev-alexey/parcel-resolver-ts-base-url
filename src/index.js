@@ -11,7 +11,9 @@ import { resolvePath } from "./steps/resolve-path";
 
 export default new Resolver({
     async resolve({ specifier, dependency, options }) {
-        const isTypescriptImport = /\.tsx?$/g.test(dependency.resolveFrom);
+        const isTypescriptImport = /\.tsx?$/g.test(
+            dependency.resolveFrom || ""
+        );
 
         if (!isTypescriptImport) {
             return null;
@@ -42,6 +44,10 @@ export default new Resolver({
                     baseUrl,
                     options.inputFS
                 );
+
+                if (!resolved) {
+                    return null;
+                }
 
                 return {
                     filePath: resolved,

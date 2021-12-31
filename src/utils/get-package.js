@@ -6,7 +6,7 @@ import { createMemo } from "./memo";
  * @param {import('./memo').Memo<Record<string, unknown>>} memo
  * @param {string} folder
  * @param {import('@parcel/fs').FileSystem} fs
- * @returns {Record<string, unknown>}
+ * @returns {Promise<Record<string, unknown> | null>}
  */
 const getPackage = async (memo, folder, fs) => {
     if (memo[folder]) {
@@ -24,6 +24,7 @@ const getPackage = async (memo, folder, fs) => {
     const packageContent = await fs.readFile(packagePath);
 
     try {
+        // @ts-expect-error packageContent is a string
         return (memo[folder] = JSON.parse(packageContent));
     } catch (_) {
         return null;
