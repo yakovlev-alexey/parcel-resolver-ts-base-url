@@ -9,8 +9,6 @@ import { parsePaths } from "./steps/parse-paths";
 import { resolveBase } from "./steps/resolve-base";
 import { resolvePath } from "./steps/resolve-path";
 
-const memoizeTsConfig = createMemoizeTsConfig();
-
 export default new Resolver({
     async resolve({ specifier, dependency, options }) {
         const isTypescriptImport = /\.tsx?$/g.test(dependency.resolveFrom);

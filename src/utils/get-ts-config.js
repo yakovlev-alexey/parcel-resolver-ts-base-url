@@ -19,4 +19,4 @@ const getTsConfig = async (memo, projectRoot, fs) => {
 
 const memoizedGetTsConfig = createMemo(getTsConfig);
 
-export { memoizedGetTsConfig as getJsConfig };
+export { memoizedGetTsConfig as getTsConfig };

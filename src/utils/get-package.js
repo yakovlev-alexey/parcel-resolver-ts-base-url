@@ -8,7 +8,7 @@ import { createMemo } from "./memo";
  * @param {import('@parcel/fs').FileSystem} fs
  * @returns {Record<string, unknown>}
  */
-const getPackage = (memo, folder, fs) => {
+const getPackage = async (memo, folder, fs) => {
     if (memo[folder]) {
         return memo[folder];
     }
