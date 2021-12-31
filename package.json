@@ -1,10 +1,28 @@
 {
   "name": "parcel-resolver-ts-paths",
   "version": "1.0.0",
-  "main": "index.js",
+  "module": "index.js",
+  "source": "src/index.js",
   "author": "Alexey Yakovlev <alexeyyakovlev0359@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "parcel build",
+    "prepublishOnly": "yarn build"
+  },
+  "files": [
+    "index.js",
+    "index.js.map",
+    "package.json",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=12"
+  },
+  "type": "module",
   "dependencies": {
-    "@parcel/plugin": "^2.0.1"
+    "@parcel/plugin": "^2.0.0"
+  },
+  "devDependencies": {
+    "parcel": "^2.0.0"
   }
 }

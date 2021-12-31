@@ -55,10 +55,8 @@ export default new Resolver({
           invalidateOnFileChange: [resolvedFromBase],
         };
       }
+    } catch (err) {}
 
-      return null;
-    } catch (err) {
-      return null;
-    }
+    return null;
   },
 });
