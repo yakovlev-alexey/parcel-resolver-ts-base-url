@@ -30,7 +30,8 @@
         "LICENSE"
     ],
     "engines": {
-        "node": ">=12"
+        "node": ">=12",
+        "parcel": "^2"
     },
     "dependencies": {
         "@parcel/plugin": "^2.0.0"
