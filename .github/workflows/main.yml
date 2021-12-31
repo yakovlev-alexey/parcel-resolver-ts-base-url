@@ -1,0 +1,48 @@
+name: main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Bump version
+        id: bump-version
+        uses: "yakovlev-alexey/bump-package-version-action@v1.1.0"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          major-wording: "feat!"
+          minor-wording: "feat"
+          patch-wording: "fix"
+
+      - name: Set cache directory
+        if: steps.bump-version.outputs.version != null
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        if: steps.bump-version.outputs.version != null
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        if: steps.bump-version.outputs.version != null
+        run: yarn --frozen-lockfile
+
+      - name: Publish npm
+        if: steps.bump-version.outputs.version != null
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: yarn publish --non-interactive --registry https://registry.npmjs.org/
