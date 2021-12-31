@@ -38,6 +38,11 @@ Simply add `parcel-resolver-ts-base-url` to your `.parcelrc`:
 
 Read more about `parcel` configuration in [official docs](https://parceljs.org/features/plugins/).
 
+### Known Issues
+
+- HMR support is unknown.
+- Resources imports using `baseUrl` or `paths` is unsupported in this resolver. Feel free to submit a PR.
+
 ## Contributing
 
 Feel free to send any suggestions in [GitHub issues](https://github.com/yakovlev-alexey/parcel-resolver-ts-base-url/issues): comment or vote on an existing issue, open a new one or create a Pull Request with your feature.
