@@ -9,11 +9,11 @@ const createMemoizeTsConfig = () => {
      * @returns {Record<string, unknown>}
      */
     return async (projectRoot, fs) => {
-        if (memo[projectRoot] !== null) {
+        if (memo[projectRoot]) {
             return memo[projectRoot];
         }
 
-        const tsConfigPath = path.join(options.projectRoot, "tsconfig.json");
+        const tsConfigPath = path.join(projectRoot, "tsconfig.json");
         const tsConfigContent = await fs.readFile(tsConfigPath);
 
         return (memo[projectRoot] = JSON.parse(tsConfigContent));

@@ -1,3 +1,5 @@
+import path from "path";
+
 import { Resolver } from "@parcel/plugin";
 
 import { createMemoizeTsConfig } from "./memo";
