@@ -1,3 +1,5 @@
+import path from "path";
+
 import { createMemo } from "./memo";
 
 /**

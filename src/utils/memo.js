@@ -12,7 +12,7 @@ const createMemo = (func) => {
     const memo = {};
 
     return () => {
-        return func(memo, arguments);
+        return func(memo, ...arguments);
     };
 };
 
