@@ -7,13 +7,13 @@ import path from "path";
  * @returns {string | null}
  */
 const resolveBase = async (specifier, baseUrl, fs) => {
-  const filePath = path.resolve(baseUrl, specifier);
+    const filePath = path.resolve(baseUrl, specifier);
 
-  if (await fs.exists(filePath)) {
-    return filePath;
-  }
+    if (await fs.exists(filePath)) {
+        return filePath;
+    }
 
-  return null;
+    return null;
 };
 
 export { resolveBase };

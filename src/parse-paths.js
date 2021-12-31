@@ -4,17 +4,17 @@
  * @returns {Path[]}
  */
 const parsePaths = (paths) => {
-  if (!paths) {
-    return [];
-  }
+    if (!paths) {
+        return [];
+    }
 
-  return Object.keys(paths).map((path) => {
-    return {
-      match: path,
-      resolve: paths[path],
-      regexp: new RegExp(`^${path.replace("*", ".*")}`),
-    };
-  });
+    return Object.keys(paths).map((path) => {
+        return {
+            match: path,
+            resolve: paths[path],
+            regexp: new RegExp(`^${path.replace("*", ".*")}`),
+        };
+    });
 };
 
 export { parsePaths };

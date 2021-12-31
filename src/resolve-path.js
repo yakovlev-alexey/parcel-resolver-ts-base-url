@@ -8,19 +8,19 @@ import path from "path";
  * @returns {string | null}
  */
 const resolvePath = async (specifier, matchedPath, baseUrl, fs) => {
-  const strippedMatch = matchedPath.match.replace("*", "");
+    const strippedMatch = matchedPath.match.replace("*", "");
 
-  const wildcard = specifier.replace(strippedMatch, "");
+    const wildcard = specifier.replace(strippedMatch, "");
 
-  for (const resolve of matchedPath.resolve) {
-    const filePath = path.resolve(baseUrl, resolve.replace("*", wildcard));
+    for (const resolve of matchedPath.resolve) {
+        const filePath = path.resolve(baseUrl, resolve.replace("*", wildcard));
 
-    if (await fs.exists(filePath)) {
-      return filePath;
+        if (await fs.exists(filePath)) {
+            return filePath;
+        }
     }
-  }
 
-  return null;
+    return null;
 };
 
 export { resolvePath };

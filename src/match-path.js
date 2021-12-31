@@ -4,13 +4,13 @@
  * @returns {Path | null}
  */
 const matchPath = (specifier, paths) => {
-  for (const path of paths) {
-    if (path.regexp.test(specifier)) {
-      return path;
+    for (const path of paths) {
+        if (path.regexp.test(specifier)) {
+            return path;
+        }
     }
-  }
 
-  return null;
+    return null;
 };
 
 export { matchPath };
