@@ -16,7 +16,7 @@ const matchFile = async (matchedPath, fs, extensions = POSSIBLE_EXTENSIONS) => {
     const isDirectory = exists && stat.isDirectory();
 
     if (isDirectory) {
-        const pkg = await getPackage();
+        const pkg = await getPackage(matchedPath, fs);
 
         const main = pkg && (pkg.main || pkg.module);
         if (main) {
