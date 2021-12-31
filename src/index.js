@@ -12,7 +12,13 @@ import { resolvePath } from "./resolve-path";
 const memoizeTsConfig = createMemoizeTsConfig();
 
 export default new Resolver({
-    async resolve({ specifier, options }) {
+    async resolve({ specifier, dependency, options }) {
+        const isTypescriptImport = /\.tsx?$/g.test(dependency.resolveFrom);
+
+        if (!isTypescriptImport) {
+            return null;
+        }
+
         try {
             const tsConfig = await memoizeTsConfig(
                 options.projectRoot,
