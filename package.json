@@ -33,7 +33,8 @@
         "node": ">=12",
         "parcel": "^2"
     },
-    "dependencies": {
+    "peerDependencies": {
+        "parcel": "^2.0.0",
         "@parcel/plugin": "^2.0.0"
     },
     "devDependencies": {
