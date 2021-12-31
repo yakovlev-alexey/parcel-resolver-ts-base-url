@@ -2,6 +2,7 @@
     "name": "parcel-resolver-ts-base-url",
     "description": "Resolve tsconfig baseUrl and paths imports with Parcel",
     "version": "1.0.1",
+    "main": "index.js",
     "source": "src/index.js",
     "author": "Alexey Yakovlev <alexeyyakovlev0359@gmail.com>",
     "license": "MIT",
