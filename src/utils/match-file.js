@@ -12,12 +12,10 @@ import { getPackage } from "./get-package";
 const matchFile = async (matchedPath, fs, extensions = POSSIBLE_EXTENSIONS) => {
     const exists = await fs.exists(matchedPath);
 
-    if (!exists) {
-        return null;
-    }
+    const stat = exists && (await fs.stat(matchedPath));
+    const isDirectory = exists && stat.isDirectory();
 
-    const stat = await fs.stat(matchedPath);
-    if (stat.isDirectory()) {
+    if (isDirectory) {
         const pkg = await getPackage();
 
         const main = pkg && (pkg.main || pkg.module);
@@ -26,7 +24,7 @@ const matchFile = async (matchedPath, fs, extensions = POSSIBLE_EXTENSIONS) => {
         }
     }
 
-    const filePath = stat.isDirectory()
+    const filePath = isDirectory
         ? path.resolve(matchedPath, "index")
         : matchedPath;
 
