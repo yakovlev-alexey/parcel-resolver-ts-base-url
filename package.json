@@ -14,7 +14,7 @@
         "build": "parcel build",
         "lint": "tsc",
         "prepublishOnly": "yarn build",
-        "test": "bash run-tests.sh"
+        "test": "yarn build && bash run-tests.sh"
     },
     "keywords": [
         "parcel",
