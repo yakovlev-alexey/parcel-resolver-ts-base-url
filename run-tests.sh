@@ -5,7 +5,7 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 files_to_move=("node_modules" ".parcelrc" "package.json" "yarn.lock")
-tests=("base-url" "paths" "base-url-paths")
+tests=("base-url" "paths" "base-url-paths" "base-url-resource" "paths-resource" "base-url-paths-resource")
 
 move_files() {
     for file in "${files_to_move[@]}";
