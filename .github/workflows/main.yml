@@ -19,6 +19,9 @@ jobs:
       - name: Lint
         run: yarn lint
 
+      - name: Test
+        run: yarn test
+
       - name: Bump version
         id: bump-version
         uses: "yakovlev-alexey/bump-package-version-action@v1.1.0"

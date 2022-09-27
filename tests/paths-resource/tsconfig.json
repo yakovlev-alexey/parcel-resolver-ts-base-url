@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "paths": {
+            "@styles/*": ["./src/styles/*"],
+            "@urls": ["./src/urls.css"]
+        }
+    }
+}

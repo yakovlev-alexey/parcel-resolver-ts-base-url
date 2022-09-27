@@ -12,7 +12,7 @@ const parsePaths = (paths) => {
         return {
             match: path,
             resolve: paths[path],
-            regexp: new RegExp(`^${path.replace("*", ".*")}`),
+            regexp: new RegExp(`^${path.replace("*", ".*")}$`),
         };
     });
 };

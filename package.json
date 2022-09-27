@@ -13,7 +13,8 @@
     "scripts": {
         "build": "parcel build",
         "lint": "tsc",
-        "prepublishOnly": "yarn build"
+        "prepublishOnly": "yarn build",
+        "test": "yarn build && bash run-tests.sh"
     },
     "keywords": [
         "parcel",
