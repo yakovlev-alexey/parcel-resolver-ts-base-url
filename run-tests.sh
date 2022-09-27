@@ -4,6 +4,9 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
+# parcel would not allow to use multiple .tsconfig.json files in the same npm project
+# to combat this we move npm and parcel files around test directories
+# so that we do not have to duplicate files and install deps multiple times
 files_to_move=("node_modules" ".parcelrc" "package.json" "yarn.lock")
 tests=("base-url" "paths" "base-url-paths" "base-url-resource" "paths-resource" "base-url-paths-resource")
 

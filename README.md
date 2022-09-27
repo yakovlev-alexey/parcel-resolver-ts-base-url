@@ -40,12 +40,12 @@ Read more about `parcel` configuration in [official docs](https://parceljs.org/f
 
 ### Known Issues
 
-- HMR support is unknown.
-- Resources imports using `baseUrl` or `paths` is unsupported in this resolver. Feel free to submit a PR.
+- ~~HMR support is unknown.~~ Manually tested and seems to be working. Make sure to submit a [GitHub issue](https://github.com/yakovlev-alexey/parcel-resolver-ts-base-url/issues) if it does not work for you.
+- ~~Resources imports using `baseUrl` or `paths` is unsupported in this resolver. Feel free to submit a PR.~~ Has been implemented with tests in place.
 
 ## Contributing
 
-Feel free to send any suggestions in [GitHub issues](https://github.com/yakovlev-alexey/parcel-resolver-ts-base-url/issues): comment or vote on an existing issue, open a new one or create a Pull Request with your feature.
+Feel free to send any suggestions in [GitHub issues](https://github.com/yakovlev-alexey/parcel-resolver-ts-base-url/issues): comment or vote on an existing issue, open a new one or create a Pull Request with your feature. Please make sure to add relevant test cases.
 
 ## License
 
