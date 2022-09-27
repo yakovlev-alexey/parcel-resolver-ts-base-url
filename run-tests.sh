@@ -35,8 +35,9 @@ run_test() {
     cd ..
 }
 
+cd tests
 
-printf "Installing deps\n"
+printf "Installing deps...\n"
 yarn install &> /dev/null || (printf "${RED}FAILED TO INSTALL DEPS${NC}\n" && exit 1)
 printf "Deps installed\n"
 
