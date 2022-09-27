@@ -8,7 +8,24 @@ NC='\033[0m'
 # to combat this we move npm and parcel files around test directories
 # so that we do not have to duplicate files and install deps multiple times
 files_to_move=("node_modules" ".parcelrc" "package.json" "yarn.lock")
-tests=("base-url" "paths" "base-url-paths" "base-url-resource" "paths-resource" "base-url-paths-resource")
+tests=("base-url" "paths" "base-url-paths" "base-url-resource" "paths-resource" "base-url-paths-resource" "paths-invalid-match")
+negative_tests=("paths-invalid-match")
+
+contains_element() {
+  local e match="$1"
+  shift
+  for e; do [[ "$e" == "$match" ]] && return 1; done
+  return 0
+}
+
+is_negative_test(){
+    if contains_element $1 "${negative_tests[@]}"
+    then
+        return 1
+    else
+        return 0
+    fi
+}
 
 move_files() {
     for file in "${files_to_move[@]}";
@@ -32,7 +49,12 @@ run_test() {
     cd $1
     printf "\n======================\n"
     printf "Running test \"$1\"...\n"
-    yarn parcel build src/main.ts &> /dev/null || cleanup $1
+    if is_negative_test $1;
+    then
+        yarn parcel build src/main.ts &> /dev/null && cleanup $1
+    else
+        yarn parcel build src/main.ts &> /dev/null || cleanup $1
+    fi
     rm -rf .parcel-cache index*
     printf "${GREEN}TEST \"$1\" SUCCESSFUL${NC}\n"
     cd ..
