@@ -39,6 +39,7 @@ cd tests
 
 printf "Installing deps...\n"
 yarn install &> /dev/null || (printf "${RED}FAILED TO INSTALL DEPS${NC}\n" && exit 1)
+cp ../index.js node_modules/parcel-resolver-ts-base-url/index.js
 printf "Deps installed\n"
 
 move_files "" "${tests[0]}/"
