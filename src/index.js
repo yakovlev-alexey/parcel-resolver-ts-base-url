@@ -21,8 +21,8 @@ export default new Resolver({
 
         try {
             const tsConfig = await getTsConfig(
-                options.projectRoot,
-                options.inputFS
+                options.inputFS,
+                options.projectRoot
             );
 
             const rawBaseUrl = tsConfig?.compilerOptions?.baseUrl || ".";
@@ -39,10 +39,10 @@ export default new Resolver({
 
             if (matchedPath !== null) {
                 const resolved = await resolvePath(
+                    options.inputFS,
                     specifier,
                     matchedPath,
-                    baseUrl,
-                    options.inputFS
+                    baseUrl
                 );
 
                 if (!resolved) {
@@ -56,9 +56,9 @@ export default new Resolver({
             }
 
             const resolvedFromBase = await resolveBase(
+                options.inputFS,
                 specifier,
-                baseUrl,
-                options.inputFS
+                baseUrl
             );
 
             if (resolvedFromBase !== null) {

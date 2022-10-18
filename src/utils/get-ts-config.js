@@ -4,11 +4,11 @@ import { createMemo } from "./memo";
 
 /**
  * @param {import('./memo').Memo<Record<string, unknown>>} memo
- * @param {string} projectRoot
  * @param {import('@parcel/fs').FileSystem} fs
+ * @param {string} projectRoot
  * @returns {Promise<Record<string, any>>}
  */
-const getTsConfig = async (memo, projectRoot, fs) => {
+const getTsConfig = async (memo, fs, projectRoot) => {
     if (memo[projectRoot]) {
         return memo[projectRoot];
     }
