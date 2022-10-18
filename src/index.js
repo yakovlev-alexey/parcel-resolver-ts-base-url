@@ -20,19 +20,22 @@ export default new Resolver({
         }
 
         try {
-            const tsConfig = await getTsConfig(
+            const { tsConfig, path: sourcePath } = await getTsConfig(
                 options.inputFS,
+                dependency.resolveFrom
+                    ? path.dirname(dependency.resolveFrom)
+                    : options.projectRoot,
                 options.projectRoot
             );
 
-            const rawBaseUrl = tsConfig?.compilerOptions?.baseUrl || ".";
-            const rawPaths = tsConfig?.compilerOptions?.paths;
+            const rawBaseUrl = tsConfig.compilerOptions?.baseUrl;
+            const rawPaths = tsConfig.compilerOptions?.paths;
 
             if (!rawBaseUrl && !rawPaths) {
                 return null;
             }
 
-            const baseUrl = path.resolve(options.projectRoot, rawBaseUrl);
+            const baseUrl = path.resolve(sourcePath, rawBaseUrl || ".");
             const paths = parsePaths(rawPaths);
 
             const matchedPath = matchPath(specifier, paths);
