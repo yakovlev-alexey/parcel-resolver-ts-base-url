@@ -4,7 +4,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-tests=("base-url" "paths" "base-url-paths" "base-url-resource" "paths-resource" "base-url-paths-resource" "paths-invalid-match" "no-tsconfig" "invalid-tsconfig")
+tests=("base-url" "paths" "base-url-paths" "base-url-resource" "paths-resource" "base-url-paths-resource" "paths-invalid-match" "no-tsconfig" "invalid-tsconfig" "js-import")
 negative_tests=("paths-invalid-match" "invalid-tsconfig")
 
 contains_element() {

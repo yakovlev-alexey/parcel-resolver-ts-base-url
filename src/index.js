@@ -9,13 +9,15 @@ import { parsePaths } from "./steps/parse-paths";
 import { resolveBase } from "./steps/resolve-base";
 import { resolvePath } from "./steps/resolve-path";
 
+import { POSSIBLE_EXTENSION_REGEX } from "./constants";
+
 export default new Resolver({
     async resolve({ specifier, dependency, options }) {
-        const isTypescriptImport = /\.tsx?$/g.test(
+        const isJavascriptImport = POSSIBLE_EXTENSION_REGEX.test(
             dependency.resolveFrom || ""
         );
 
-        if (!isTypescriptImport) {
+        if (!isJavascriptImport) {
             return null;
         }
 
