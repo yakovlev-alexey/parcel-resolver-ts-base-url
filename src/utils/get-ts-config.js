@@ -16,18 +16,34 @@ const getTsConfig = async (memo, fs, sourcePath, projectRoot) => {
         }
 
         const tsConfigPath = path.join(sourcePath, "tsconfig.json");
-        if (await fs.exists(tsConfigPath)) {
-            const tsConfigContent = await fs.readFile(tsConfigPath, "utf-8");
 
-            return {
-                tsConfig: (memo[sourcePath] = JSON.parse(tsConfigContent)),
-                path: sourcePath,
-            };
+        try {
+            if (await fs.exists(tsConfigPath)) {
+                const tsConfigContent = await fs.readFile(
+                    tsConfigPath,
+                    "utf-8"
+                );
+
+                return {
+                    tsConfig: (memo[sourcePath] = JSON.parse(tsConfigContent)),
+                    path: sourcePath,
+                };
+            }
+        } catch (err) {
+            throw new Error(
+                `Unexpected exception when reading ${path.relative(
+                    projectRoot,
+                    tsConfigPath
+                )}: ${err instanceof Error ? err.message : err}`
+            );
         }
 
         if (sourcePath === projectRoot) {
             throw new Error(
-                "[parcel-resolver-ts-paths] tsconfig.json not found"
+                `tsconfig.json not found in ${path.relative(
+                    projectRoot,
+                    sourcePath
+                )}`
             );
         }
 

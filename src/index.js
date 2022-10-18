@@ -70,7 +70,21 @@ export default new Resolver({
                     invalidateOnFileChange: [resolvedFromBase],
                 };
             }
-        } catch (err) {}
+        } catch (err) {
+            return {
+                diagnostics: [
+                    {
+                        message:
+                            err instanceof Error
+                                ? err.message
+                                : "Unknown error",
+                        hints: [
+                            "Check if a tsconfig.json file exists and has valid configuration in it",
+                        ],
+                    },
+                ],
+            };
+        }
 
         return null;
     },

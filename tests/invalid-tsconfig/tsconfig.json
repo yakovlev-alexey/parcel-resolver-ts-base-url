@@ -1,0 +1,5 @@
+error{
+    "compilerOptions": {
+        "baseUrl": "src"
+    }
+}
