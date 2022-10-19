@@ -34,7 +34,7 @@ Simply add `parcel-resolver-ts-base-url` to your `.parcelrc`:
 }
 ```
 
-> At the moment `parcel` doesn't provide a way to specify `tsconfig.json` location I know of. `parcel-resolver-ts-base-url` will use `tsconfig.json` from the project root.
+> At the moment `parcel` doesn't provide a way to specify `tsconfig.json` location I know of. `parcel-resolver-ts-base-url` will look for `tsconfig.json` recursively from the import location to the project root (`.parcelrc` location) like Parcel itself does.
 
 Read more about `parcel` configuration in [official docs](https://parceljs.org/features/plugins/).
 

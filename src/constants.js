@@ -1,3 +1,5 @@
 const POSSIBLE_EXTENSIONS = ["js", "jsx", "ts", "tsx", "cjs", "mjs"];
 
-export { POSSIBLE_EXTENSIONS };
+const POSSIBLE_EXTENSION_REGEX = /[.](([cm]js)|([jt]sx?))$/;
+
+export { POSSIBLE_EXTENSIONS, POSSIBLE_EXTENSION_REGEX };

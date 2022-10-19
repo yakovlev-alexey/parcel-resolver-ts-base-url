@@ -9,40 +9,45 @@ import { parsePaths } from "./steps/parse-paths";
 import { resolveBase } from "./steps/resolve-base";
 import { resolvePath } from "./steps/resolve-path";
 
+import { POSSIBLE_EXTENSION_REGEX } from "./constants";
+
 export default new Resolver({
     async resolve({ specifier, dependency, options }) {
-        const isTypescriptImport = /\.tsx?$/g.test(
+        const isJavascriptImport = POSSIBLE_EXTENSION_REGEX.test(
             dependency.resolveFrom || ""
         );
 
-        if (!isTypescriptImport) {
+        if (!isJavascriptImport) {
             return null;
         }
 
         try {
-            const tsConfig = await getTsConfig(
-                options.projectRoot,
-                options.inputFS
+            const { tsConfig, path: sourcePath } = await getTsConfig(
+                options.inputFS,
+                dependency.resolveFrom
+                    ? path.dirname(dependency.resolveFrom)
+                    : options.projectRoot,
+                options.projectRoot
             );
 
-            const rawBaseUrl = tsConfig?.compilerOptions?.baseUrl || ".";
-            const rawPaths = tsConfig?.compilerOptions?.paths;
+            const rawBaseUrl = tsConfig.compilerOptions?.baseUrl;
+            const rawPaths = tsConfig.compilerOptions?.paths;
 
             if (!rawBaseUrl && !rawPaths) {
                 return null;
             }
 
-            const baseUrl = path.resolve(options.projectRoot, rawBaseUrl);
+            const baseUrl = path.resolve(sourcePath, rawBaseUrl || ".");
             const paths = parsePaths(rawPaths);
 
             const matchedPath = matchPath(specifier, paths);
 
             if (matchedPath !== null) {
                 const resolved = await resolvePath(
+                    options.inputFS,
                     specifier,
                     matchedPath,
-                    baseUrl,
-                    options.inputFS
+                    baseUrl
                 );
 
                 if (!resolved) {
@@ -56,9 +61,9 @@ export default new Resolver({
             }
 
             const resolvedFromBase = await resolveBase(
+                options.inputFS,
                 specifier,
-                baseUrl,
-                options.inputFS
+                baseUrl
             );
 
             if (resolvedFromBase !== null) {
@@ -67,7 +72,21 @@ export default new Resolver({
                     invalidateOnFileChange: [resolvedFromBase],
                 };
             }
-        } catch (err) {}
+        } catch (err) {
+            return {
+                diagnostics: [
+                    {
+                        message:
+                            err instanceof Error
+                                ? err.message
+                                : "Unknown error",
+                        hints: [
+                            "Check if a tsconfig.json file exists and has valid configuration in it",
+                        ],
+                    },
+                ],
+            };
+        }
 
         return null;
     },

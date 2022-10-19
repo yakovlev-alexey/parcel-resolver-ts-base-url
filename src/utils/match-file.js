@@ -5,11 +5,12 @@ import { POSSIBLE_EXTENSIONS } from "../constants";
 import { getPackage } from "./get-package";
 
 /**
- * @param {string} matchedPath
  * @param {import('@parcel/fs').FileSystem} fs
+ * @param {string} matchedPath
  * @param {string[]} extensions
+ * @returns {Promise<string | null>}
  */
-const matchFile = async (matchedPath, fs, extensions = POSSIBLE_EXTENSIONS) => {
+const matchFile = async (fs, matchedPath, extensions = POSSIBLE_EXTENSIONS) => {
     const exists = await fs.exists(matchedPath);
 
     const stat = exists && (await fs.stat(matchedPath));
@@ -20,7 +21,7 @@ const matchFile = async (matchedPath, fs, extensions = POSSIBLE_EXTENSIONS) => {
             return matchedPath;
         }
 
-        const pkg = await getPackage(matchedPath, fs);
+        const pkg = await getPackage(fs, matchedPath);
 
         const main = pkg && (pkg.main || pkg.module);
         if (typeof main === "string") {

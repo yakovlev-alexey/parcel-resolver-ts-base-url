@@ -4,11 +4,11 @@ import { createMemo } from "./memo";
 
 /**
  * @param {import('./memo').Memo<Record<string, unknown>>} memo
- * @param {string} folder
  * @param {import('@parcel/fs').FileSystem} fs
+ * @param {string} folder
  * @returns {Promise<Record<string, unknown> | null>}
  */
-const getPackage = async (memo, folder, fs) => {
+const getPackage = async (memo, fs, folder) => {
     if (memo[folder]) {
         return memo[folder];
     }
