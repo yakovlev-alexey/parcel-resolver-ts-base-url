@@ -1,0 +1,6 @@
+{
+    "compilerOptions": {
+        // this is base url! and it has trailing comma, which is awesome!
+        "baseUrl": "src",
+    }
+}
