@@ -1,4 +1,5 @@
 import path from "path";
+import * as JSONC from "jsonc-parser";
 
 import { createMemo } from "./memo";
 
@@ -25,7 +26,7 @@ const getTsConfig = async (memo, fs, sourcePath, projectRoot) => {
                 );
 
                 return {
-                    tsConfig: (memo[sourcePath] = JSON.parse(tsConfigContent)),
+                    tsConfig: (memo[sourcePath] = parseJsoncOrThrow(tsConfigContent, tsConfigPath)),
                     path: sourcePath,
                 };
             }
@@ -50,6 +51,26 @@ const getTsConfig = async (memo, fs, sourcePath, projectRoot) => {
         sourcePath = path.join(sourcePath, "..");
     }
 };
+
+/**
+ * @param {string} jsoncString
+ * @param {string?} fileName
+ * @returns {any}
+ */
+function parseJsoncOrThrow(jsoncString, fileName){
+    /**
+     * @type {JSONC.ParseError[]}
+    */
+    let errors = [];
+    let parsingResult = JSONC.parse(jsoncString, errors, {allowTrailingComma: true});
+    if(errors.length > 0){
+        let {error: errorCode, offset} = errors[0];
+        let errName = JSONC.printParseErrorCode(errorCode);
+        console.error({errName, offset});
+        throw new Error(`Cannot parse ${fileName ?? "JSONC"}: got ${errName} at position ${offset}`);
+    }
+    return parsingResult
+}
 
 const memoizedGetTsConfig = createMemo(getTsConfig);
 
