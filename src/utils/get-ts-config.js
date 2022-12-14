@@ -1,7 +1,7 @@
 import path from "path";
-import * as JSONC from "jsonc-parser";
 
 import { createMemo } from "./memo";
+import { parseJsoncOrThrow } from "./parse-jsonc"
 
 /**
  * @param {import('./memo').Memo<Record<string, unknown>>} memo
@@ -25,17 +25,17 @@ const getTsConfig = async (memo, fs, sourcePath, projectRoot) => {
                     "utf-8"
                 );
 
+                const parsedConfig = parseJsoncOrThrow(tsConfigContent);
+
                 return {
-                    tsConfig: (memo[sourcePath] = parseJsoncOrThrow(tsConfigContent, tsConfigPath)),
+                    tsConfig: (memo[sourcePath] = parsedConfig),
                     path: sourcePath,
                 };
             }
         } catch (err) {
+            const errMsg = err instanceof Error ? err.message : err;
             throw new Error(
-                `Unexpected exception when reading ${path.relative(
-                    projectRoot,
-                    tsConfigPath
-                )}: ${err instanceof Error ? err.message : err}`
+                `Unexpected exception when reading ${tsConfigPath}: ${errMsg}`
             );
         }
 
@@ -51,26 +51,6 @@ const getTsConfig = async (memo, fs, sourcePath, projectRoot) => {
         sourcePath = path.join(sourcePath, "..");
     }
 };
-
-/**
- * @param {string} jsoncString
- * @param {string?} fileName
- * @returns {any}
- */
-function parseJsoncOrThrow(jsoncString, fileName){
-    /**
-     * @type {JSONC.ParseError[]}
-    */
-    let errors = [];
-    let parsingResult = JSONC.parse(jsoncString, errors, {allowTrailingComma: true});
-    if(errors.length > 0){
-        let {error: errorCode, offset} = errors[0];
-        let errName = JSONC.printParseErrorCode(errorCode);
-        console.error({errName, offset});
-        throw new Error(`Cannot parse ${fileName ?? "JSONC"}: got ${errName} at position ${offset}`);
-    }
-    return parsingResult
-}
 
 const memoizedGetTsConfig = createMemo(getTsConfig);
 
