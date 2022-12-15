@@ -1,6 +1,7 @@
 import path from "path";
 
 import { createMemo } from "./memo";
+import { parseJsoncOrThrow } from "./parse-jsonc"
 
 /**
  * @param {import('./memo').Memo<Record<string, unknown>>} memo
@@ -24,17 +25,17 @@ const getTsConfig = async (memo, fs, sourcePath, projectRoot) => {
                     "utf-8"
                 );
 
+                const parsedConfig = parseJsoncOrThrow(tsConfigContent);
+
                 return {
-                    tsConfig: (memo[sourcePath] = JSON.parse(tsConfigContent)),
+                    tsConfig: (memo[sourcePath] = parsedConfig),
                     path: sourcePath,
                 };
             }
         } catch (err) {
+            const errMsg = err instanceof Error ? err.message : err;
             throw new Error(
-                `Unexpected exception when reading ${path.relative(
-                    projectRoot,
-                    tsConfigPath
-                )}: ${err instanceof Error ? err.message : err}`
+                `Unexpected exception when reading ${tsConfigPath}: ${errMsg}`
             );
         }
 
